@@ -45,7 +45,8 @@ CREATE TABLE `cos` (
 
 #### 排行-摄影
 
-https://api.vc.bilibili.com/link_draw/v2/Doc/rank?biz=2&category=cos&rank_type=day&page_size=5  &rank_type=week/month
+https://api.vc.bilibili.com/link_draw/v2/Doc/rank?biz=2&category=cos&rank_type=day&page_size=5  
+可换参数 &rank_type=week/month
 
 #### 排行-画友
 
@@ -69,8 +70,8 @@ https://api.vc.bilibili.com/link_draw/v2/Photo/list?category=cos&type=new&page_n
 #### 画友-漫画
 
 https://api.vc.bilibili.com/link_draw/v2/Doc/index?type=recommend&page_num=0&page_size=45   
-
 可选参数（acg   &type=hot）
+
 https://api.vc.bilibili.com/link_draw/v2/Doc/list?category=comic&type=hot&page_num=0&page_size=20
 https://api.vc.bilibili.com/link_draw/v2/Doc/list?category=comic&type=new&page_num=0&page_size=20
 
