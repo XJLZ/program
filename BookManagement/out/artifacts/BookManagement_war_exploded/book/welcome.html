@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <title>欢迎界面</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        div{
+            text-align: center;
+            line-height: 500px;
+            font-size: 80px;
+            width: 100%;
+            height: 100%;
+            margin: 0 auto;
+            color: #ff0000;
+            position: absolute;
+            background-color: rgba(255,255,255,.2);
+
+        }
+        body{
+            background: url(img/control.jpg);
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<div></div>
+</body>
+<script type="text/javascript">
+    countTime();
+    setInterval(countTime,1000);
+
+    function countTime(){
+        var nowTime = new Date();
+        var year = nowTime.getFullYear()
+        var month = nowTime.getMonth() +1;
+        var date = nowTime.getDate();
+        var hour = nowTime.getHours();
+        var mintues = nowTime.getMinutes();
+        var seconds = nowTime.getSeconds();
+        $("div").html(year+"年"+month+"月"+date+"日"+hour+"时"+mintues+"分"+seconds+"秒");
+    }
+</script>
+
+</html>
