@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="dao.UserDao">
+    <!--配置查询所有-->
+    <select id="findAll" resultType="domain.User">
+        select * from user
+    </select>
+    <!--配置根据ID查询-->
+    <select id="findById" resultType="domain.User" parameterType="int">
+        select * from user where id = #{id};
+    </select>
+    <!--添加数据-->
+    <insert id="saveUser" parameterType="domain.User">
+        insert into user(username,birthday,sex,address)values(#{username},#{birthday},#{sex},#{address});
+    </insert>
+    <!--更新数据-->
+    <update id="updateUser" parameterType="domain.User">
+        update user set username=#{username},birthday=#{birthday},sex=#{sex},address=#{address} where id=#{id};
+    </update>
+    <!--根据id删除数据-->
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        delete from user where id = #{id};
+    </delete>
+    <!--模糊查询-->
+    <select id="findByName" parameterType="String" resultType="domain.User">
+        select * from user where username like #{username};
+    </select>
+    <!--聚合函数-->
+    <select id="findTotal" resultType="int">
+       select count(id) from user;
+    </select>
+    <!--动态查询_01-->
+    <select id="findByDynamic" resultType="domain.User" parameterType="domain.User">
+        select * from
+        <where>
+            <if test="username != null">
+                and username = #{username}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+        </where>
+    </select>
+</mapper>

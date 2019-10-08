@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="dao.UserDao">
+    <!--配置查询所有-->
+    <select id="findAll" resultType="user">
+        select * from user
+    </select>
+    <!--配置根据ID查询-->
+    <select id="findById" resultType="domain.User" parameterType="int">
+        select * from user where id = #{id};
+    </select>
+    <!--添加数据-->
+    <insert id="saveUser" parameterType="User">
+        insert into user(username,birthday,sex,address)values(#{username},#{birthday},#{sex},#{address});
+    </insert>
+    <!--更新数据-->
+    <update id="updateUser" parameterType="domain.User">
+        update user set username=#{username},birthday=#{birthday},sex=#{sex},address=#{address} where id=#{id};
+    </update>
+    <!--根据id删除数据-->
+    <delete id="deleteUser" parameterType="Integer">
+        delete from user where id = #{id};
+    </delete>
+    <!--模糊查询-->
+    <select id="findByName" parameterType="String" resultType="domain.User">
+        select * from user where username like "%"#{username}"%";
+    </select>
+    <!--聚合函数-->
+    <select id="findTotal" resultType="int">
+       select count(id) from user;
+    </select>
+    <!--动态查询-->
+    <select id="findByDynamic" resultType="User" parameterType="User">
+        select * from user
+        <where>
+            <if test="username != null">
+                and username = #{username}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+        </where>
+    </select>
+
+    <!--查询多个ID-->
+    <select id="findByInIds" resultType="domain.User" parameterType="domain.User">
+        select * from user
+        <where>
+            <if test="ids != null and ids.size() > 0">
+                <foreach collection="ids" open="and id in (" close=")" item="id" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <!--多对多查询-->
+    <!--定义结果集类型-->
+    <resultMap id="userMap" type="user">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="birthday" column="birthday"></result>
+        <result property="sex" column="sex"></result>
+        <result property="address" column="address"></result>
+        <!-- 配置角色集合的映射 -->
+        <collection property="roles" ofType="role">
+            <id property="roleId" column="rid"></id>
+            <result property="roleName" column="role_name"></result>
+            <result property="roleDesc" column="role_desc"></result>
+        </collection>
+    </resultMap>
+    <select id="findRoles" resultMap="userMap">
+        SELECT u.*, r.ID rid, r.ROLE_DESC, r.ROLE_NAME FROM user u
+          LEFT JOIN user_role ur ON ur.UID = u.ID
+          LEFT JOIN role r ON r.id = ur.RID;
+    </select>
+</mapper>
