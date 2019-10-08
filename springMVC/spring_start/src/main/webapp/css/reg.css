@@ -1,0 +1,32 @@
+body{background-color: rgba(223, 255, 231, 0.28)
+        }
+        .container{
+            border-radius: 25px;
+            box-shadow: 0 0 20px #222;
+            width: 380px;
+            height: 400px;
+            margin: 0 auto;
+            margin-top: 200px;
+            background-color: rgba(152, 242, 242, 0.23);
+        }
+        .right {
+            position: relative;
+            left: 40px;
+            top: 20px;
+        }
+        input{
+            width: 180px;
+            height: 25px;
+        }
+        button{
+            background-color: rgba(230, 228, 236, 0.93);
+            border: none;
+            color: #110c0f;
+            padding: 10px 70px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 30px;
+            margin-left: 50px;
+        }

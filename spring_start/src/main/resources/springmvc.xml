@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 配置创建 spring 容器要扫描的包 -->
+    <context:component-scan base-package="com.controller"/>
+
+    <!--视图解析器-->
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/pages/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+
+    <!--配置自定义类型转换器-->
+    <!--<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">-->
+        <!--<property name="converters">-->
+            <!--<set>-->
+                <!--<bean class="com.util.StringToDate"/>-->
+            <!--</set>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <!--开启springmvc框架的注解、类型转换器-->
+    <!--<mvc:annotation-driven conversion-service="conversionService"/>-->
+    <mvc:annotation-driven />
+
+    <!--在 springmvc 的配置文件中可以配置，静态资源不过滤： -->
+    <!-- location 表示路径，mapping 表示文件，**表示该目录下的文件以及子目录的文件 -->
+    <mvc:resources mapping="/css/**/" location="/css/"></mvc:resources>
+    <mvc:resources mapping="/js/**/" location="/js/"></mvc:resources>
+    <mvc:resources mapping="/fonts/**/" location="/fonts/"></mvc:resources>
+</beans>

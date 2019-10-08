@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--把对象的创建交给spring来管理-->
+    <!--创建bean的三种方式-->
+    <!--1.bean标签 只有id和class属性，采用默认构造函数创建对象，若没有默认构造函数，则对象无法创建-->
+    <!--<bean id="accountService" class="com.service.Impl.AccountServiceImpl"/>-->
+
+    <!--2. 使用普通工厂类创建对象 （使用某个方法创建对象）-->
+    <!--<bean id="InstanceFactory" class="com.factory.InstanceFactory"/>-->
+    <!--<bean id="accountService" factory-bean="InstanceFactory" factory-method="getAccountService"/>-->
+
+    <!--3. 使用普通工厂类的静态方法创建对象 （使用某个静态方法创建对象）-->
+    <!--<bean id="accountService" class="com.factory.StaticFactory" factory-method="getAccountService"/>-->
+
+    <!--bean的作用范围 scope
+            常用单例和多例
+            singleton:  单例（默认）
+            prototype;  多例
+            request:    作用于web应用的请求范围
+            session:    作用于web应用的会话范围
+            global-session;     作用于集群的会话范围
+        -->
+    <!--<bean id="accountService" class="com.service.Impl.AccountServiceImpl" />-->
+    <!--bean 的生命周期
+        单例:
+            出生:容器一创建就初始化
+            活着:只要容器在就一直在
+            死亡:容器销毁，对象消亡  手动销毁
+            总结：和容器的生命周期一样
+        多例:
+            出生:使用对象是创建
+            活着:对象只要实在使用中就一直在
+            死亡:当对象长时间不使用，也没有应用其他对象，由Java的垃圾回收器回收
+    -->
+    <bean id="bean1" class="com.domain.bean1" scope="singleton" init-method="init" destroy-method="destroy" />
+
+    <!--配置一个日期对象-->
+    <bean id="time" class="java.util.Date"></bean>
+
+    <!--set方式注入
+        实体类要有set方法
+        涉及的标签:property
+        标签的属性:
+                  name:用于指定注入时调用set方法的名称
+                  value:要注入的数据
+                  ref:用于指定其他
+    -->
+    <bean id="bean2" class="com.domain.bean2">
+        <property name="name" value="Tom"></property>
+        <property name="age" value="13"></property>
+        <property name="birthday" ref="time"></property>
+    </bean>
+
+    <!--集合数据注入
+        list结构:list array set (标签可以互换（list array set）)
+        map结构:map prop (标签可以互换（map prop）)
+    -->
+    <bean id="bean3" class="com.domain.bean3">
+       <property name="strs">
+         <list>
+             <value>aaa</value>
+             <value>bbb</value>
+             <value>ccc</value>
+         </list>
+       </property>
+        <property name="lists">
+            <list>
+                <value>aaa</value>
+                <value>bbb</value>
+                <value>ccc</value>
+            </list>
+        </property>
+        <property name="sets">
+            <list>
+                <value>aaa</value>
+                <value>bbb</value>
+                <value>ccc</value>
+            </list>
+        </property>
+        <property name="maps">
+            <map>
+                <entry key="1" value="111"></entry>
+                <entry key="2" value="222"></entry>
+                <entry key="3" value="333"></entry>
+            </map>
+        </property>
+        <property name="prop">
+           <props>
+               <prop key="a">aaa</prop>
+               <prop key="b">bbb</prop>
+               <prop key="c">ccc</prop>
+           </props>
+        </property>
+    </bean>
+</beans>

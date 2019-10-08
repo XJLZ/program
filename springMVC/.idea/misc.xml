@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/Pc_01" />
+    <file type="web" url="file://$PROJECT_DIR$/spring_02" />
+    <file type="web" url="file://$PROJECT_DIR$/spring_03" />
+  </component>
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/spring_02/pom.xml" />
+        <option value="$PROJECT_DIR$/spring_03/pom.xml" />
+      </list>
+    </option>
+  </component>
+</project>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--配置spring要扫描的包-->
+    <context:component-scan base-package="com.xjl"></context:component-scan>
+
+     <!--配置JdbcTemplate-->
+    <bean id="template" class="org.springframework.jdbc.core.JdbcTemplate" scope="prototype">
+        <!--注入数据源-->
+        <constructor-arg name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--配置数据源-->
+    <context:property-placeholder location="classpath:druid.properties"/>
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="username" value="${druid.username}"/>
+        <property name="password" value="${druid.password}"/>
+        <property name="driverClassName" value="${driverClassName}"/>
+        <property name="url" value="${url}"/>
+    </bean>
+
+     <!--1.将核心事务管理器配置到spring容器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--2.配置事务的通知-->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <!--5.配置事务的属性-->
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!--3.配置aop-->
+    <aop:config>
+        <aop:pointcut id="pt" expression="execution(* com.xjl.service.Impl.*.*(..))"/>
+        <!-- 4 建立aop和事务通知的对应关系-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pt"/>
+    </aop:config>
+
+    <!--配置spring开启注解-->
+    <aop:aspectj-autoproxy/>
+
+</beans>
